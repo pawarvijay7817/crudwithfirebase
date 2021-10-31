@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-12 mt-3">
+    <h2 class="text-center text-primary">Manage Products</h2>
+  </div>
+  <div class="col-md-6">
+    <h2 class="text-center text-primary">Add Products</h2>
+    <form>
+      <div class="container">
+      <div class="row">
+      <div class="col-md-12">
+        <label>Product Id</label>
+        <input type="text" class="form-control" #id>
+        
+        <label>Product Name</label>
+        <input type="text" class="form-control" #name>
+        
+        <label>Product Price</label>
+        <input type="text" class="form-control" #price>
+      </div>
+      <div class="col-md-12 mt-3">
+        <ng-container *ngIf="editBtn">
+          <button class="btn btn-primary" type="button" (click)="onUpdate(id,name,price)">Update Product</button>
+        </ng-container>
+        <ng-container *ngIf="!editBtn">
+          <button class="btn btn-primary" type="button" (click)="onAddProduct(id,name,price)">Add Product</button>
+        </ng-container>
+        <button class="btn btn-success" type="button" (click)="onSaveProduct()">Save Products</button>
+        <button class="btn btn-warning" type="button" (click)="getProducts()">Fetch Products</button>
+      </div>
+      </div>
+      </div> 
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h2 class="text-center text-primary">{{Title | async}}</h2>
+    <table class="table table-bordered table-stripped table-primary">
+        <thead>
+            <tr>
+            <th>#</th>  
+            <th>ID</th>  
+            <th>Name</th>    
+            <th>Price</th>  
+            <th>Action</th>  
+            </tr>
+        </thead>
+        <tbody *ngIf="!loader">
+          <tr *ngFor="let product of products; let i=index">
+            <td>{{ i+1 }}</td>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td class="text-danger">
+              <button type="button" class="btn btn-sm btn-primary" (click)="onEditProduct(i)">Edit</button>
+               <button type="button" class="btn btn-sm btn-danger"  (click)="onDeleteProduct(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <div class="text-center" *ngIf="loader">
+      <div class="spinner-border text-warning" role="status">
+        <span class="sr-only"></span>
+      </div> Fetching Products...
+    </div>
+  </div>
+</div>
